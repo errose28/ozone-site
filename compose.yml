@@ -9,4 +9,8 @@ services:
     volumes:
       - ".:/ozone-site"
     working_dir: "/ozone-site"
-    command: ["npm", "run", "start"]
+    # ERROR: Docusaurus dev server is available within the container (curl localhost:3000 in the container),
+    #   but not outside of the container from the web browser.
+    # ERROR: Does not use node_modules directory specified in the config.
+    #   Possible to fix with https://stackoverflow.com/questions/29181032/add-a-volume-to-docker-but-exclude-a-sub-folder?
+    command: sh -c "pnpm config set modules-dir /ozone-site-deps/node_modules && pnpm start"

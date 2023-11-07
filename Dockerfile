@@ -13,13 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG NODE_VERSION=20
-FROM node:${NODE_VERSION}
+# See https://pnpm.io/docker
 
-# Used to build Node edependnecies into the image.
-# The actual site will be mounted from a volume at runtime.
+ARG NODE_VERSION=20
+FROM node:${NODE_VERSION}-slim AS base
+# Creates store at /pnpm/store by default.
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+# Install dependencies to /ozone-site-deps/node_modules as part of the image.
 WORKDIR /ozone-site-deps
-ENV NODE_PATH=/ozone-site-deps/node_modules
 COPY package.json .
-COPY package-lock.json .
-RUN npm install
+COPY pnpm-lock.yaml .
+# ERROR: Complains about peer dependencies.
+#RUN pnpm install --frozen-lockfile
+RUN pnpm install

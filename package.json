@@ -1,5 +1,6 @@
 {
-  "name": "doc-site",
+  "packageManager": "pnpm@7.33.6",
+  "name": "ozone-site",
   "version": "0.0.0",
   "private": true,
   "scripts": {
