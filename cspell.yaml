@@ -1,0 +1,31 @@
+# cSpell Settings
+version: "0.2"
+language: "en"
+minWordLength: 2
+# List of words to be always considered correct
+words:
+  # Ozone specific words
+  - HDDS
+  - ratis
+  - OM
+  - SCM
+  - datanode
+  - datanodes
+  - ofs
+  - fso
+  - obs
+  # Other systems
+  - matomo
+  - qube
+  - proto
+  - ui
+  - ux
+  - intellij
+  - asf
+  - dashboarding
+  - TDE
+  - RPC
+  - aarch
+  - trino
+  - oozie
+  - spnego
