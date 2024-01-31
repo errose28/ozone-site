@@ -15,6 +15,8 @@
 
 # See https://pnpm.io/docker
 
+# Test modification for the PR
+
 ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-slim AS base
 # Creates store at /pnpm/store by default.
