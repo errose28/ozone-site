@@ -1,0 +1,59 @@
+# Ref: https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.yaml
+
+# Only - (dash) character is allowed for bullet lists.
+MD004:
+  style: dash
+
+MD013:
+  # TODO should we enable this? It may help for git diff.
+  line_length: 500
+  # Match Ozone's code line length.
+  code_block_line_length: 120
+  # Keep the minimap on the right legible.
+  heading_block_line_length: 80
+
+# Numbered lists must use numbers in ascending order.
+MD029:
+  style: ordered
+
+# Disallow inline html except for these allowed elements.
+MD033:
+  allowed_elements:
+  - br
+
+# Allow bare URLs since wrapping URLs in <> is invalid mdx.
+MD034: false
+
+# Horiziontal rule.
+MD035:
+  style: "---"
+
+# Enforce consistent capitalization.
+# TODO finish this list.
+MD044:
+  names:
+  - FSO
+  - OBS
+  # Lowercase is allowed in repo names like apache/ozone and domains like ozone.apache.org where the name is not
+  # surrounded by spaces.
+  - " Ratis "
+  - " Ozone "
+  - SPNEGO
+  # This rule is not enforced inside code blocks or HTML.
+  code_blocks: false
+  html_elements: false
+
+# Indentation should not be used to inidcate a multi-line code block.
+MD046:
+  style: fenced
+
+# Only allow ``` to define multi-line code blocks.
+MD048:
+  style: backtick
+
+MD054:
+  # Disable inline links with the same URL, like [www.google.com](www.google.com)
+  url_inline: false
+
+MD055:
+  style: leading_and_trailing
