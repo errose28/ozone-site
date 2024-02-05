@@ -5,7 +5,7 @@ MD004:
   style: dash
 
 MD013:
-  # TODO should we enable this? It may help for git diff.
+  # TODO Disabel general line length but limit code blocks and headings.
   line_length: 500
   # Match Ozone's code line length.
   code_block_line_length: 120

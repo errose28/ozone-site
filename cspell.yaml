@@ -12,8 +12,11 @@ words:
   - datanode
   - datanodes
   - ofs
-  - fso
-  - obs
+  - FSO
+  - OBS
+  - HttpFS
+  - CLI
+  - UIs
   # Other systems
   - matomo
   - qube
