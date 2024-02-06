@@ -6,52 +6,44 @@ root="$(git rev-parse --show-toplevel)"
 rc=0
 
 dir_regex='[a-z0-9][a-z0-9./-]*[a-z0-9]'
-file_regex="$valid_doc_regex.md"
-doc_dir_regex="[0-9][0-9]-$valid_dir_regex"
-doc_file_regex="[0-9][0-9]-$valid_file_regex"
+file_regex="$dir_regex\.md"
+doc_dir_regex="[0-9][0-9]-$dir_regex"
+doc_file_regex="[0-9][0-9]-$file_regex"
 
-# TODO check is only running on docs directories and it is failing.
+check_regex() {
+    file="$1"
+    regex="$2"
+    if ! echo "$(basename "$file")" | grep -Exq "$regex"; then
+        echo "$file does not match regex $regex" 1>&2
+        rc=1
+    fi
+}
+
+is_markdown() {
+    file="$1"
+    echo "$(basename "$file")" | grep -Exq '.+\.md'
+}
 
 # Check docs pages. These must use number prefixes.
-for file in $(find "$root"/docs); do
-    name="$(basename "$file")"
-    # Check docs directories.
+for file in $(find "$root"/docs/*); do
     if [ -d "$file" ]; then
-
-        echo "check $name"
-        if echo "$name" | grep -Exvq "$doc_dir_regex"; then
-            echo "Disallowed doc directory name: $file" 1>&2
-            rc=1
-        fi
-    # Check docs files.
-    elif echo "$name" | grep -q '*.md'; then
-        echo "check $name"
-        if echo "$name" | grep -Exvq "$doc_file_regex"; then
-            echo "Disallowed doc file name: $file" 1>&2
-            rc=1
-        fi
+        # Check docs directories.
+        check_regex "$file" "$doc_dir_regex"
+    elif is_markdown "$file"; then
+        # Check docs files.
+        check_regex "$file" "$doc_file_regex"
     fi
 done
 
 # Check regular pages. These do not have number prefixes.
-for file in $(find "$root"/src/pages); do
+for file in $(find "$root"/src/pages/*); do
     name="$(basename "$file")"
     # Check directories.
     if [ -d "$file" ]; then
-
-        echo "check $name"
-        if echo "$name" | grep -Exvq "$dir_regex"; then
-            echo "Disallowed directory name: $file" 1>&2
-            rc=1
-        fi
+        check_regex "$file" "$dir_regex"
     # Check files.
-    elif echo "$name" | grep -q '*.md'; then
-
-        echo "check $name"
-        if echo "$name" | grep -Exvq "$file_regex"; then
-            echo "Disallowed file name: $file" 1>&2
-            rc=1
-        fi
+    elif is_markdown "$file"; then
+        check_regex "$file" "$file_regex"
     fi
 done
 
