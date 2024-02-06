@@ -54,7 +54,7 @@ jobs:
     - name: Run Spell Check
       working-directory: ${{ env.work_dir }}
       run: |
-        spelling.sh
+        ./spelling.sh
 
 
 
@@ -130,4 +130,4 @@ jobs:
       - name: Run file name check
         working-directory: ${{ env.work_dir }}
         run: |
-          names.sh
+          ./names.sh
