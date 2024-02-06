@@ -11,7 +11,7 @@ if [ -z "$sitemap" ]; then
 fi
 
 rc=0
-valid_url_regex='https://ozone.apache.org/[a-z0-9][a-z0-9./-]*[a-z0-9/]'
+valid_url_regex='https://ozone\.apache\.org/[a-z0-9][a-z0-9\./-]*[a-z0-9/]'
 
 for url in $(yq --output-format=props '.urlset.url[].loc' "$sitemap"); do
     if echo "$url" | grep -vx 'https://ozone.apache.org/' | grep -Exvq "$valid_url_regex"; then
