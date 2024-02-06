@@ -27,12 +27,8 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
-  runner: ubuntu-latest
   node_version: 20
-
-defaults:
-  run:
-    working-directory: ./github/scripts
+  work_dir: ./github/scripts
 
 # TODO cache pnpm dev deps between jobs
 
@@ -50,6 +46,7 @@ jobs:
         run: |
           pnpm install --dev
       - name: Run Spell Check
+        working-directory: ${{ env.work_dir }}
         run: |
           spelling.sh
   markdownlint:
@@ -65,6 +62,7 @@ jobs:
         run: |
           pnpm install --dev
       - name: Run markdownlint
+        working-directory: ${{ env.work_dir }}
         run: |
           markdownlint.sh
   frontmatter:
@@ -80,6 +78,7 @@ jobs:
         run: |
           pnpm install --dev
       - name: Run markdown frontmatter check
+        working-directory: ${{ env.work_dir }}
         run: |
           frontmatter.sh
   sidebar:
@@ -95,6 +94,7 @@ jobs:
         run: |
           pnpm install --dev
       - name: Run docs sidebar check
+        working-directory: ${{ env.work_dir }}
         run: |
           sidebar.sh
   file-names:
@@ -103,5 +103,6 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
       - name: Run file name check
+        working-directory: ${{ env.work_dir }}
         run: |
           names.sh
