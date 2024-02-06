@@ -26,44 +26,78 @@ concurrency:
   group: static-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+env:
+  runner: ubuntu-latest
+  node_version: 20
+
+defaults:
+  run:
+    working-directory: ./github/scripts
+
+# TODO cache pnpm dev deps between jobs
+
 jobs:
   Spelling:
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+        run: |
+          pnpm install --dev
       - name: Run Spell Check
         run: |
-          .github/scripts/spelling.sh
+          spelling.sh
   Markdown lint:
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+        run: |
+          pnpm install --dev
       - name: Run markdownlint
         run: |
-          .github/scripts/markdownlint.sh
+          markdownlint.sh
   Frontmatter:
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+        run: |
+          pnpm install --dev
       - name: Run markdown frontmatter check
         run: |
-          .github/scripts/frontmatter.sh
+          frontmatter.sh
   Sidebar:
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node_version }}
+        run: |
+          pnpm install --dev
       - name: Run docs sidebar check
         run: |
-          .github/scripts/sidebar.sh
+          sidebar.sh
   File names:
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
       - name: Run file name check
         run: |
-          .github/scripts/names.sh
+          names.sh
