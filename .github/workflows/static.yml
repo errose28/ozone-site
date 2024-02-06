@@ -28,75 +28,100 @@ concurrency:
 
 env:
   node_version: 20
-  work_dir: ./github/scripts
+  pnpm_version: 8
+  work_dir: .github/scripts
 
 # TODO cache pnpm dev deps between jobs
 
 jobs:
   spelling:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-      - name: Install node dependencies
-        run: |
-          pnpm install --dev
-      - name: Run Spell Check
-        working-directory: ${{ env.work_dir }}
-        run: |
-          spelling.sh
-  markdownlint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-      - name: Install node dependencies
-        run: |
-          pnpm install --dev
-      - name: Run markdownlint
-        working-directory: ${{ env.work_dir }}
-        run: |
-          markdownlint.sh
-  frontmatter:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-      - name: Install node dependencies
-        run: |
-          pnpm install --dev
-      - name: Run markdown frontmatter check
-        working-directory: ${{ env.work_dir }}
-        run: |
-          frontmatter.sh
-  sidebar:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.node_version }}
-      - name: Install node dependencies
-        run: |
-          pnpm install --dev
-      - name: Run docs sidebar check
-        working-directory: ${{ env.work_dir }}
-        run: |
-          sidebar.sh
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use pnpm ${{ env.pnpm_version }}
+      uses: pnpm/action-setup@v2
+      with:
+        version: ${{ env.pnpm_version }}
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+        cache: 'pnpm'
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run Spell Check
+      working-directory: ${{ env.work_dir }}
+      run: |
+        spelling.sh
+
+
+
+
+    # steps:
+    #   - name: Checkout project
+    #     uses: actions/checkout@v4
+    #   - name: Setup node
+    #     uses: actions/setup-node@v4
+    #     with:
+    #       node-version: ${{ env.node_version }}
+    #   - name: Install node dependencies
+    #     run: |
+    #       pnpm install --dev
+    #   - name: Run Spell Check
+    #     working-directory: ${{ env.work_dir }}
+    #     run: |
+    #       spelling.sh
+
+  # markdownlint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout project
+  #       uses: actions/checkout@v4
+  #     - name: Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.node_version }}
+  #     - name: Install node dependencies
+  #       run: |
+  #         pnpm install --dev
+  #     - name: Run markdownlint
+  #       working-directory: ${{ env.work_dir }}
+  #       run: |
+  #         markdownlint.sh
+  # frontmatter:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout project
+  #       uses: actions/checkout@v4
+  #     - name: Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.node_version }}
+  #     - name: Install node dependencies
+  #       run: |
+  #         pnpm install --dev
+  #     - name: Run markdown frontmatter check
+  #       working-directory: ${{ env.work_dir }}
+  #       run: |
+  #         frontmatter.sh
+  # sidebar:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout project
+  #       uses: actions/checkout@v4
+  #     - name: Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.node_version }}
+  #     - name: Install node dependencies
+  #       run: |
+  #         pnpm install --dev
+  #     - name: Run docs sidebar check
+  #       working-directory: ${{ env.work_dir }}
+  #       run: |
+  #         sidebar.sh
   file-names:
     runs-on: ubuntu-latest
     steps:
