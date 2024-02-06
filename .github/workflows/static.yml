@@ -38,7 +38,7 @@ defaults:
 
 jobs:
   Spelling:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
         run: |
           spelling.sh
   Markdown lint:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
@@ -68,7 +68,7 @@ jobs:
         run: |
           markdownlint.sh
   Frontmatter:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
@@ -83,7 +83,7 @@ jobs:
         run: |
           frontmatter.sh
   Sidebar:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
@@ -98,7 +98,7 @@ jobs:
         run: |
           sidebar.sh
   File names:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
