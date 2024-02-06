@@ -46,6 +46,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
+      - name: Install node dependencies
         run: |
           pnpm install --dev
       - name: Run Spell Check
@@ -60,6 +61,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
+      - name: Install node dependencies
         run: |
           pnpm install --dev
       - name: Run markdownlint
@@ -74,6 +76,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
+      - name: Install node dependencies
         run: |
           pnpm install --dev
       - name: Run markdown frontmatter check
@@ -88,6 +91,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node_version }}
+      - name: Install node dependencies
         run: |
           pnpm install --dev
       - name: Run docs sidebar check
