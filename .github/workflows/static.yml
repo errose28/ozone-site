@@ -52,7 +52,7 @@ jobs:
       - name: Run Spell Check
         run: |
           spelling.sh
-  Markdown lint:
+  Markdownlint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
