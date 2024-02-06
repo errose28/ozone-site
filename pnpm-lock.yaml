@@ -28,6 +28,18 @@ dependencies:
     version: 18.2.0(react@18.2.0)
 
 devDependencies:
+  '@cspell/dict-docker':
+    specifier: ^1.1.7
+    version: 1.1.7
+  '@cspell/dict-java':
+    specifier: ^5.0.6
+    version: 5.0.6
+  '@cspell/dict-markdown':
+    specifier: ^2.0.1
+    version: 2.0.1
+  '@cspell/dict-shell':
+    specifier: ^1.0.6
+    version: 1.0.6
   '@docusaurus/eslint-plugin':
     specifier: ^3.1.1
     version: 3.1.1(eslint@8.56.0)(typescript@5.2.2)
@@ -1713,6 +1725,10 @@ packages:
     resolution: {integrity: sha512-3W9tHPcSbJa6s0bcqWo6VisEDTSN5zOtDbnPabF7rbyjRpNo0uHXHRJQF8gAbFzoTzBBhgkTmrfSiuyQm7vBUQ==}
     dev: true
 
+  /@cspell/dict-markdown@2.0.1:
+    resolution: {integrity: sha512-9j3t1UXsy3M1B8+LN8wPO73KzX7v94GBfefWKSMJDpBvDUnOjwxabnj9ICBOVErBPwURS+LkjJbgVXkvr1OiPQ==}
+    dev: true
+
   /@cspell/dict-node@4.0.3:
     resolution: {integrity: sha512-sFlUNI5kOogy49KtPg8SMQYirDGIAoKBO3+cDLIwD4MLdsWy1q0upc7pzGht3mrjuyMiPRUV14Bb0rkVLrxOhg==}
     dev: true
@@ -1753,6 +1769,10 @@ packages:
 
   /@cspell/dict-scala@5.0.0:
     resolution: {integrity: sha512-ph0twaRoV+ylui022clEO1dZ35QbeEQaKTaV2sPOsdwIokABPIiK09oWwGK9qg7jRGQwVaRPEq0Vp+IG1GpqSQ==}
+    dev: true
+
+  /@cspell/dict-shell@1.0.6:
+    resolution: {integrity: sha512-hBd9jJsqdxqsN+oweAaA3IqFAdgIAqpuFRExZEbBAlNFAUjhkjux+AJhQAAjq8JcSRAuwWhZzePimg1Sa/mgew==}
     dev: true
 
   /@cspell/dict-software-terms@3.3.13:

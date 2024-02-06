@@ -24,6 +24,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@cspell/dict-docker": "^1.1.7",
+    "@cspell/dict-java": "^5.0.6",
+    "@cspell/dict-markdown": "^2.0.1",
+    "@cspell/dict-shell": "^1.0.6",
     "@docusaurus/eslint-plugin": "^3.1.1",
     "@docusaurus/module-type-aliases": "3.0.0",
     "ajv-cli": "^5.0.0",
