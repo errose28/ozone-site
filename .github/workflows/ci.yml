@@ -37,7 +37,7 @@ env:
 
 jobs:
   static:
-    uses: .github/workflows/static.yml
+    uses: ./.github/workflows/static.yml
   build-image:
     needs:
     - static
