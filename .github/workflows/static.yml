@@ -34,13 +34,14 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-    - name: Enable corepack
-      run: |
-        corepack enable
+        cache: pnpm
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run Spell Check
@@ -61,13 +62,14 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-    - name: Enable corepack
-      run: |
-        corepack enable
+        cache: pnpm
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run markdownlint
@@ -79,13 +81,14 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-    - name: Enable corepack
-      run: |
-        corepack enable
+        cache: pnpm
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run markdown frontmatter check
@@ -97,13 +100,14 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-    - name: Enable corepack
-      run: |
-        corepack enable
+        cache: pnpm
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run docs sidebar check
