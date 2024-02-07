@@ -1,0 +1,121 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: static
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  script_dir: .github/scripts
+  node_version: 20
+
+# TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
+# Key should be a hash of Dockerfile and pnpm-lock.yaml
+
+# TODO is additional npm caching needed on top of the setup-node action?
+
+jobs:
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run Spell Check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./spelling.sh
+  lint-yaml:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run yamllint
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./yamllint.sh
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run markdownlint
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./markdownlint.sh
+  frontmatter:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run markdown frontmatter check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./frontmatter.sh
+  sidebar:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run docs sidebar check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./sidebar.sh
+  file-names:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run file name check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./names.sh
