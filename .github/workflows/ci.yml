@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: docusaurus
+name: ci
 
 on:
   pull_request:
@@ -23,17 +23,109 @@ on:
   push:
 
 concurrency:
-  group: docusaurus-${{ github.event.pull_request.number || github.sha }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   script_dir: .github/scripts
-  docker_image: ozone-site-dev
+  node_version: 20
 
 # TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
 # Key should be a hash of Dockerfile and pnpm-lock.yaml
 
+# TODO is additional npm caching needed on top of the setup-node action?
+
 jobs:
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run Spell Check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./spelling.sh
+  lint-yaml:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run yamllint
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./yamllint.sh
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run markdownlint
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./markdownlint.sh
+  frontmatter:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run markdown frontmatter check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./frontmatter.sh
+  sidebar:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Use Node.js ${{ env.node_version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.node_version }}
+    - name: Enable corepack
+      run: |
+        corepack enable
+    - name: Install pnpm dependencies
+      run: pnpm install --dev
+    - name: Run docs sidebar check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./sidebar.sh
+  file-names:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run file name check
+      working-directory: ${{ env.script_dir }}
+      run: |
+        ./names.sh
   build-image:
     runs-on: ubuntu-latest
     steps:
@@ -87,13 +179,13 @@ jobs:
           name: build
           path: build
       - name: Curl website homepage
+        timeout-minutes: 5
         run: |
           docker compose run --detach --service-ports site pnpm serve
-          while true; do
-            curl --head --silent http://localhost:3000 | head -n1 | grep "OK";
-            [ $? -eq 0 ] && break;
+          while [ "$(curl -so /dev/null -w '%{http_code}' http://localhost:3000)" != 200 ]; do
             sleep 1;
           done
+          echo 'Website homepage is responsive.'
   publish-website:
     if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
     needs:
