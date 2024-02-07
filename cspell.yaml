@@ -1,6 +1,6 @@
 # cSpell Settings
 version: "0.2"
-language: "en"
+language: en
 minWordLength: 2
 dictionaries:
 - bash
@@ -16,54 +16,54 @@ import:
 
 # List of words to be always considered correct
 words:
-  # Ozone specific words
-  - HDDS
-  - ratis
-  - OM
-  - SCM
-  - datanode
-  - datanodes
-  - ofs
-  - FSO
-  - OBS
-  - HttpFS
-  - CLI
-  - UIs
-  - safemode
-  - PMC
-  # Other systems
-  - KDC
-  - classpath
-  - HDFS
-  - Protolock
-  - CSI
-  - matomo
-  - qube
-  - proto
-  - protolock
-  - protolocks
-  - intellij
-  - asf
-  - TDE
-  - RPC
-  - aarch
-  - trino
-  - oozie
-  - spnego
-  - RocksDB
-  - hsync
-  - SASL
-  - jira
-  - jiras
-  - mvn
-  - gpg
-  - sed
-  - mds
-  - frontmatter
-  - javadoc
-  # Misc terms
-  - acking
-  - dashboarding
-  - UI
-  - UX
-  - devs
+# Ozone specific words
+- HDDS
+- ratis
+- OM
+- SCM
+- datanode
+- datanodes
+- ofs
+- FSO
+- OBS
+- HttpFS
+- CLI
+- UIs
+- safemode
+- PMC
+# Other systems
+- KDC
+- classpath
+- HDFS
+- Protolock
+- CSI
+- matomo
+- qube
+- proto
+- protolock
+- protolocks
+- intellij
+- asf
+- TDE
+- RPC
+- aarch
+- trino
+- oozie
+- spnego
+- RocksDB
+- hsync
+- SASL
+- jira
+- jiras
+- mvn
+- gpg
+- sed
+- mds
+- frontmatter
+- javadoc
+# Misc terms
+- acking
+- dashboarding
+- UI
+- UX
+- devs

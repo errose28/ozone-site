@@ -18,8 +18,8 @@ name: ci
 on:
   pull_request:
     types:
-      - opened
-      - synchronize
+    - opened
+    - synchronize
   push:
 
 concurrency:
