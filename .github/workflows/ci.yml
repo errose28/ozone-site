@@ -101,7 +101,7 @@ jobs:
           done
           echo 'Website homepage is responsive.'
   publish-website:
-    if: ${{ github.event == 'push' }}
+    # if: ${{ github.event == 'push' }}
     needs:
     - run-website
     - check-sitemap
