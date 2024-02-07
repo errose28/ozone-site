@@ -1,0 +1,63 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: publish
+
+on:
+  workflow_call:
+
+concurrency:
+  group: publish-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
+# Key should be a hash of Dockerfile and pnpm-lock.yaml
+
+jobs:
+  publish-website:
+    # if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
+    needs:
+    - run-website
+    - check-sitemap
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download website build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+      - name: "Checkout publish branch"
+        uses: actions/checkout@v4
+        with:
+          path: 'publish'
+          # Update this to asf-site when the website is ready to be published.
+          ref: 'asf-site-v2-test'
+      - name: "Commit changes"
+        working-directory: 'publish'
+        run: |
+          # Delete previous build from the branch, but preserve files with necessary metadata.
+          mv README.md .asf.yaml .git /tmp
+          rm -rf $(ls -A)
+          mv /tmp/README.md /tmp/.asf.yaml /tmp/.git .
+
+          # Commit new build to the branch.
+          cp -R ../build/. .
+          git config --global user.name 'Github Actions'
+          git config --global user.email 'noreply@github.com'
+          git add .
+          git commit -a -m "[auto] Apply changes from $GITHUB_REF_NAME $GITHUB_SHA" || true
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

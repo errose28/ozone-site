@@ -26,9 +26,6 @@ env:
   script_dir: .github/scripts
   node_version: 20
 
-# TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
-# Key should be a hash of Dockerfile and pnpm-lock.yaml
-
 # TODO is additional npm caching needed on top of the setup-node action?
 
 jobs:

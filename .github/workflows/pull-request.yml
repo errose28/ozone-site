@@ -22,6 +22,7 @@ on:
       - opened
       - edited
       - synchronize
+      - pull_request_target
 
 jobs:
   title:
@@ -34,4 +35,12 @@ jobs:
           TITLE: ${{ github.event.pull_request.title }}
         run:
           .github/scripts/pr_title_check.sh "${TITLE}"
-
+  # This job reads its configuration from the .github/labeler.yml file.
+  # This job and its configuration can be deleted once the website's feature branch is merged.
+  labeler:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v5

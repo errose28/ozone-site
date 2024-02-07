@@ -26,112 +26,12 @@ concurrency:
   group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  script_dir: .github/scripts
-  node_version: 20
-
-# TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
-# Key should be a hash of Dockerfile and pnpm-lock.yaml
-
-# TODO is additional npm caching needed on top of the setup-node action?
-
 jobs:
   static:
     uses: ./.github/workflows/static.yml
-  build-image:
-    needs:
-    - static
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Build Docker image
-        run: |
-          docker compose build
-  build-website:
-    needs:
-    - build-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Build website
-        run: |
-          docker compose run site pnpm build
-      - name: Save website build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: build
-          if-no-files-found: error
-  check-sitemap:
-    needs:
-    - build-website
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get URL check script
-        uses: actions/checkout@v4
-      - name: Download website build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: build
-      - name: Check sitemap.xml
-        working-directory: ${{ env.script_dir }}
-        run: |
-          ./url.sh "$GITHUB_WORKSPACE"/build/sitemap.xml
-  run-website:
-    needs:
-    - build-website
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Docker files
-        uses: actions/checkout@v4
-      - name: Download website build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: build
-      - name: Curl website homepage
-        timeout-minutes: 5
-        run: |
-          docker compose run --detach --service-ports site pnpm serve
-          while [ "$(curl -so /dev/null -w '%{http_code}' http://localhost:3000)" != 200 ]; do
-            sleep 1;
-          done
-          echo 'Website homepage is responsive.'
-  publish-website:
-    if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
-    needs:
-    - run-website
-    - check-sitemap
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download website build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: build
-      - name: "Checkout publish branch"
-        uses: actions/checkout@v4
-        with:
-          path: 'publish'
-          # Update this to asf-site when the website is ready to be published.
-          ref: 'asf-site-v2'
-      - name: "Commit changes"
-        working-directory: 'publish'
-        run: |
-          # Delete previous build from the branch, but preserve files with necessary metadata.
-          mv README.md .asf.yaml .git /tmp
-          rm -rf $(ls -A)
-          mv /tmp/README.md /tmp/.asf.yaml /tmp/.git .
-
-          # Commit new build to the branch.
-          cp -R ../build/. .
-          git config --global user.name 'Github Actions'
-          git config --global user.email 'noreply@github.com'
-          git add .
-          git commit -a -m "[auto] Apply changes from $GITHUB_REF_NAME $GITHUB_SHA" || true
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  docusuaurus:
+    # needs: static
+    uses: ./.github/workflows/docusaurus.yml
+  publish:
+    needs: docusaurus
+    uses: ./.github/workflows/publish.yml
