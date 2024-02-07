@@ -29,7 +29,7 @@ concurrency:
 jobs:
   static:
     uses: ./.github/workflows/static.yml
-  docusuaurus:
+  docusaurus:
     # needs: static
     uses: ./.github/workflows/docusaurus.yml
   publish:
