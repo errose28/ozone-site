@@ -39,15 +39,14 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
-    - name: Use pnpm ${{ env.pnpm_version }}
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.pnpm_version }}
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
         cache: 'pnpm'
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run Spell Check
