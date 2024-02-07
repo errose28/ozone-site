@@ -53,6 +53,7 @@ jobs:
     - name: Run Spell Check
       working-directory: ${{ env.work_dir }}
       run: |
+        ./spelling.sh
 
   markdownlint:
     runs-on: ubuntu-latest
