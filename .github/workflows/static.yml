@@ -28,7 +28,6 @@ concurrency:
 
 env:
   node_version: 20
-  pnpm_version: 8
   work_dir: .github/scripts
 
 # TODO cache pnpm dev deps between jobs. cache key in pnpm action may not be doing anything.
@@ -58,15 +57,13 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
-    - name: Use pnpm ${{ env.pnpm_version }}
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.pnpm_version }}
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-        cache: 'pnpm'
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run markdownlint
@@ -79,15 +76,13 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
-    - name: Use pnpm ${{ env.pnpm_version }}
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.pnpm_version }}
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-        cache: 'pnpm'
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run markdown frontmatter check
@@ -100,15 +95,13 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
-    - name: Use pnpm ${{ env.pnpm_version }}
-      uses: pnpm/action-setup@v2
-      with:
-        version: ${{ env.pnpm_version }}
     - name: Use Node.js ${{ env.node_version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.node_version }}
-        cache: 'pnpm'
+    - name: Enable corepack
+      run: |
+        corepack enable
     - name: Install pnpm dependencies
       run: pnpm install --dev
     - name: Run docs sidebar check
