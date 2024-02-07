@@ -30,7 +30,7 @@ jobs:
   static:
     uses: ./.github/workflows/static.yml
   docusaurus:
-    needs: static
+    # needs: static
     uses: ./.github/workflows/docusaurus.yml
   publish:
     needs: docusaurus
