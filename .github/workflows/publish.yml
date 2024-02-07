@@ -27,10 +27,6 @@ concurrency:
 
 jobs:
   publish-website:
-    # if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
-    needs:
-    - run-website
-    - check-sitemap
     runs-on: ubuntu-latest
     steps:
       - name: Download website build artifact
