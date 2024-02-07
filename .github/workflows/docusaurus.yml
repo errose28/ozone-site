@@ -28,7 +28,6 @@ concurrency:
 
 env:
   script_dir: .github/scripts
-  docker_image_tag: ozone-site-dev
 
 # TODO add docker image caching
 
@@ -39,12 +38,8 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
       - name: Build Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          tags: ${{ env.docker_image_tag }}
-          cache-to: type=gha,mode=min
-          cache-from: type=gha
+        run: |
+          docker compose build
   build-website:
     needs:
     - build-image
@@ -52,13 +47,6 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
-      - name: Download Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          tags: ${{ env.docker_image_tag }}
-          cache-to: type=gha,mode=min
-          cache-from: type=gha
       - name: Build website
         run: |
           docker compose run site pnpm build
@@ -91,26 +79,18 @@ jobs:
     steps:
       - name: Get Docker files
         uses: actions/checkout@v4
-      - name: Download Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          tags: ${{ env.docker_image_tag }}
-          cache-to: type=gha,mode=min
-          cache-from: type=gha
       - name: Download website build artifact
         uses: actions/download-artifact@v4
         with:
           name: build
           path: build
       - name: Curl website homepage
-        timeout-minutes: 5
         run: |
           docker compose run --detach --service-ports site pnpm serve
           while true; do
-            curl --head --silent http://localhost:3000 | head -n1 | grep "OK"
-            [ $? -eq 0 ] && break
-            sleep 1
+            curl --head --silent http://localhost:3000 | head -n1 | grep "OK";
+            [ $? -eq 0 ] && break;
+            sleep 1;
           done
   publish-website:
     if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
