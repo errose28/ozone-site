@@ -2,8 +2,9 @@
 
 root="$(git rev-parse --show-toplevel)"
 
-# Check file content.
+echo 'Checking document content...'
 pnpm cspell lint --root="$root" --no-progress '**/*.md' '**/_category_.yml'
-# Check file names.
+
+echo 'Checking file names...'
 find "$root"/docs "$root"/src/pages | pnpm cspell --no-progress --show-context stdin://URLs
 
