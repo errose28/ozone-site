@@ -93,7 +93,7 @@ jobs:
             sleep 1;
           done
   publish-website:
-    if: ${{ github.event == push && github.ref_name == HDDS-9225-website-v2 }}
+    if: ${{ github.event == 'push' && github.ref_name == 'HDDS-9225-website-v2' }}
     needs:
     - run-website
     - check-sitemap
