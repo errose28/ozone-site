@@ -15,7 +15,7 @@
 
 # Build Ozone website v2 and commit it to a staging branch.
 # This will be picked up by configurations in .asf.yml to publish it to a staging domain.
-name: "auto-publish-website-v2"
+name: "auto publish website-v2"
 
 on:
   push:
