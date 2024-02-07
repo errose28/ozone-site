@@ -1,0 +1,55 @@
+ignore:
+- pnpm-lock.yaml
+- node_modules
+
+yaml-files:
+- "*.yaml"
+- "*.yml"
+
+rules:
+  anchors: enable
+  braces:
+    forbid: false
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 1
+    max-spaces-inside-empty: 1
+  brackets:
+    forbid: false
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 1
+    max-spaces-inside-empty: 1
+  colons: enable
+  commas: enable
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: enable
+  document-end:
+    present: false
+  document-start: disable
+  empty-lines:
+    max: 1
+  empty-values: disable
+  float-values:
+    require-numeral-before-decimal: true
+  hyphens: enable
+  indentation:
+    spaces: 2
+    indent-sequences: false
+    check-multi-line-strings: true
+  key-duplicates: enable
+  key-ordering: disable
+  line-length:
+    max: 120
+  new-line-at-end-of-file: enable
+  new-lines: enable
+  octal-values:
+    forbid-explicit-octal: false
+  quoted-strings:
+    quote-type: double
+    required: only-when-needed
+  trailing-spaces: enable
+  truthy:
+    # Prevent this from flagging Github actions key "on".
+    check-keys: false

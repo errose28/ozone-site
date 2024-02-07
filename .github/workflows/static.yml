@@ -18,8 +18,8 @@ name: static
 on:
   pull_request:
     types:
-      - opened
-      - synchronize
+    - opened
+    - synchronize
   push:
 
 concurrency:
@@ -52,7 +52,17 @@ jobs:
       run: |
         ./spelling.sh
 
-  markdownlint:
+  lint-yaml:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run yamllint
+      working-directory: ${{ env.work_dir }}
+      run: |
+        ./yamllint.sh
+
+  lint-markdown:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout project

@@ -12,6 +12,10 @@
       "description": "Only use slug to specify the base URL for documentation.",
       "type": "string",
       "enum": [ "/" ]
+    },
+    "draft": {
+      "description": "Makes pages for incomplete features only visible in development mode.",
+      "type": "boolean"
     }
   },
   "additionalProperties": false
