@@ -24,20 +24,20 @@ concurrency:
 
 env:
   script_dir: .github/scripts
+  image_tar: ozone-site-image.tar
 
 jobs:
   build-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
       - name: Check docker image cache
         id: cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
-          path: ozone-site-image.tar
+          path: ${{ env.image_tar }}
           key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
-      - name: Checkout project
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
       - name: Build Docker image
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -45,7 +45,13 @@ jobs:
       - name: Save docker image to tar
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          docker save ozone-site --output=ozone-site-image.tar
+          docker save ozone-site --output="${{ env.image_tar }}"
+      - name: Save docker image tar to cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.image_tar }}
+          key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
   build-website:
     needs:
     - build-image
@@ -56,11 +62,11 @@ jobs:
       - name: Restore docker image tar from cache
         uses: actions/cache/restore@v4
         with:
-          path: ozone-site-image.tar
+          path: ${{ env.image_tar }}
           key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
       - name: Load docker image
         run: |
-          docker load --input=ozone-site-image.tar
+          docker load --input="${{ env.image_tar }}"
       - name: Build website
         run: |
           docker compose run site pnpm build
@@ -102,11 +108,11 @@ jobs:
       - name: Restore docker image tar from cache
         uses: actions/cache/restore@v4
         with:
-          path: ozone-site-image.tar
+          path: ${{ env.image_tar }}
           key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
       - name: Load docker image
         run: |
-          docker load --input=ozone-site-image.tar
+          docker load --input="${{ env.image_tar }}"
       - name: Curl website homepage
         timeout-minutes: 5
         run: |
