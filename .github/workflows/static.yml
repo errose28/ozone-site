@@ -26,8 +26,6 @@ env:
   script_dir: .github/scripts
   node_version: 20
 
-# TODO is additional npm caching needed on top of the setup-node action?
-
 jobs:
   spelling:
     runs-on: ubuntu-latest
