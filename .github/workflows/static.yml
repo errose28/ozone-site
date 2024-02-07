@@ -58,8 +58,8 @@ jobs:
   markdownlint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+    - name: Checkout project
+      uses: actions/checkout@v4
     - name: Use pnpm ${{ env.pnpm_version }}
       uses: pnpm/action-setup@v2
       with:
@@ -74,13 +74,13 @@ jobs:
     - name: Run markdownlint
       working-directory: ${{ env.work_dir }}
       run: |
-        markdownlint.sh
+        ./markdownlint.sh
 
   frontmatter:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+    - name: Checkout project
+      uses: actions/checkout@v4
     - name: Use pnpm ${{ env.pnpm_version }}
       uses: pnpm/action-setup@v2
       with:
@@ -95,13 +95,13 @@ jobs:
     - name: Run markdown frontmatter check
       working-directory: ${{ env.work_dir }}
       run: |
-        frontmatter.sh
+        ./frontmatter.sh
 
   sidebar:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+    - name: Checkout project
+      uses: actions/checkout@v4
     - name: Use pnpm ${{ env.pnpm_version }}
       uses: pnpm/action-setup@v2
       with:
@@ -116,14 +116,14 @@ jobs:
     - name: Run docs sidebar check
       working-directory: ${{ env.work_dir }}
       run: |
-        sidebar.sh
+        ./sidebar.sh
 
   file-names:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
-      - name: Run file name check
-        working-directory: ${{ env.work_dir }}
-        run: |
-          ./names.sh
+    - name: Checkout project
+      uses: actions/checkout@v4
+    - name: Run file name check
+      working-directory: ${{ env.work_dir }}
+      run: |
+        ./names.sh
