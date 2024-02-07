@@ -37,6 +37,14 @@ jobs:
       - name: Build Docker image
         run: |
           docker compose build
+      - name: Save docker image to tar
+        run: |
+          docker save --output=ozone-site-image.tar
+      - name: Save docker image tar to cache
+        uses: actions/cache/save@v4
+        with:
+          path: ozone-site-image.tar
+          key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
   build-website:
     needs:
     - build-image
@@ -44,6 +52,14 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v4
+      - name: Restore docker image tar from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ozone-site-image.tar
+          key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
+      - name: Load docker image
+        run: |
+          docker load --input=ozone-site-image.tar
       - name: Build website
         run: |
           docker compose run site pnpm build
@@ -81,9 +97,18 @@ jobs:
         with:
           name: build
           path: build
+      - name: Restore docker image tar from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ozone-site-image.tar
+          key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
+      - name: Load docker image
+        run: |
+          docker load --input=ozone-site-image.tar
       - name: Curl website homepage
         timeout-minutes: 5
         run: |
+          echo 'Running website and checking homepage...'
           docker compose run --detach --service-ports site pnpm serve
           while [ "$(curl -so /dev/null -w '%{http_code}' http://localhost:3000)" != 200 ]; do
             sleep 1;

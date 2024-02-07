@@ -22,9 +22,6 @@ concurrency:
   group: publish-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-# TODO add docker image caching with docker save/docker load and https://github.com/actions/cache
-# Key should be a hash of Dockerfile and pnpm-lock.yaml
-
 jobs:
   publish-website:
     runs-on: ubuntu-latest
