@@ -39,7 +39,7 @@ jobs:
           docker compose build
       - name: Save docker image to tar
         run: |
-          docker save --output=ozone-site-image.tar
+          docker save ozone-site --output=ozone-site-image.tar
       - name: Save docker image tar to cache
         uses: actions/cache/save@v4
         with:
