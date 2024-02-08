@@ -1,4 +1,6 @@
-# cSpell Settings
+# Ref: https://cspell.org/
+
+# cSpell Settings.
 version: "0.2"
 language: en
 minWordLength: 2
@@ -14,7 +16,8 @@ import:
 - "@cspell/dict-shell/cspell-ext.json"
 - "@cspell/dict-docker/cspell-ext.json"
 
-# List of words to be always considered correct
+# List of words to be always considered correct.
+# Case insensitive.
 words:
 # Ozone specific words
 - HDDS
@@ -27,8 +30,6 @@ words:
 - FSO
 - OBS
 - HttpFS
-- CLI
-- UIs
 - safemode
 - PMC
 # Other systems
@@ -65,5 +66,7 @@ words:
 - acking
 - dashboarding
 - UI
+- UIs
 - UX
 - devs
+- CLI
