@@ -118,4 +118,4 @@ jobs:
       timeout-minutes: 5
       working-directory: ${{ env.script_dir }}
       run: |
-        ./run.sh
+        ./curl.sh
