@@ -34,6 +34,8 @@ MD044:
   names:
   - FSO
   - OBS
+  - ofs
+  - EC
   # Lowercase is allowed in repo names like apache/ozone and domains like ozone.apache.org where the name is not
   # surrounded by spaces.
   - " Ratis "
