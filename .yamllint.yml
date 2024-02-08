@@ -1,3 +1,5 @@
+# Ref: https://yamllint.readthedocs.io/en/stable/rules.html
+
 ignore:
 - pnpm-lock.yaml
 - node_modules
