@@ -32,12 +32,13 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v4
-    - name: Check docker image cache
+    - name: Check Docker image cache
       id: cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache@v4
       with:
         path: ${{ env.image_tar }}
         key: image-${{ hashFiles('Dockerfile', 'compose.yml', 'pnpm-lock.yaml') }}
+        lookup-only: true
     - name: Build Docker image
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
