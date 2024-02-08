@@ -79,6 +79,10 @@ MD044:
   - SSL
   - X.509
   - REST API
+  # Capitalize file type acronyms. If referring to specific file names, use code blocks.
+  - JSON
+  - YAML
+  - XML
   # Other systems:
   - gRPC
   - RocksDB
