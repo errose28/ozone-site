@@ -23,11 +23,12 @@ header:
   # See https://www.apache.org/legal/src-headers.html#faq-exceptions
   # Files already in .gitignore are ignored by default.
   paths-ignore:
-  - 'LICENSE.txt'
+  - LICENSE.txt
   # Json does not support comments.
-  - '**/*.json'
-  # Markdown pages do not require headers. See examples on https://github.com/apache/www-site
-  - '**/*.md'
+  - "**/*.json"
+  # Docs content does not require headers. See examples on https://github.com/apache/www-site
+  - "**/*.md"
+  - "**/_category_.yml"
 
   # Do not comment on pull requests.
   comment: never
