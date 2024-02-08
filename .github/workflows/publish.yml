@@ -36,7 +36,7 @@ jobs:
       with:
         path: publish
         # Update this to asf-site when the website is ready to be published.
-        ref: asf-site-v2-test
+        ref: asf-site-v2
     - name: Commit changes
       working-directory: publish
       run: |
