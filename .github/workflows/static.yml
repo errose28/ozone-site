@@ -15,6 +15,8 @@ jobs:
   license:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout project
+      uses: actions/checkout@v4
     - name: Check license headers
       uses: apache/skywalking-eyes@v0.5.0
   spelling:
