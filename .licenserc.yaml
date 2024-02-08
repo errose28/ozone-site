@@ -20,13 +20,18 @@ header:
     spdx-id: Apache-2.0
     copyright-owner: Apache Software Foundation
 
+  # See https://www.apache.org/legal/src-headers.html#faq-exceptions
+  # Files already in .gitignore are ignored by default.
   paths-ignore:
-    - 'build'
-    - 'LICENSE'
-    - 'NOTICE'
+  - 'LICENSE.txt'
+  # Json does not support comments.
+  - '**/*.json'
+  # Markdown pages do not require headers. See examples on https://github.com/apache/www-site
+  - '**/*.md'
 
+  # Do not comment on pull requests.
   comment: never
 
 dependency:
   files:
-    - package.json
+  - package.json
