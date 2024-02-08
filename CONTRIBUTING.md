@@ -14,7 +14,7 @@ This document summarizes the contribution process.
 
 - **Tests**: [HDDS-9601](https://issues.apache.org/jira/browse/HDDS-9601) will implement a basic set of tests to run as part of CI for the website, but you can help expand or improve them.
 
-- **Tools**: You can submit improvements to how we use various tools like pnpm, docker, and Dependabot that are used in the development of the website.
+- **Tools**: You can submit improvements to how we use various tools like pnpm, Docker, and Dependabot that are used in the development of the website.
 
 ## Filing Jira Issues
 
@@ -202,11 +202,11 @@ Docusaurus supports previewing the website locally. Below are various options to
 
 #### Option 1: Docker (Recommended)
 
-The project includes a `Dockerfile` and a `compose.yml` file to build and run the website in a containerized environment. This creates a docker image called `ozone-site` with all the dependencies included, and uses it to run the [Docusaurus development server](https://docusaurus.io/docs/installation#running-the-development-server).
+The project includes a `Dockerfile` and a `compose.yml` file to build and run the website in a containerized environment. This creates a Docker image called `ozone-site` with all the dependencies included, and uses it to run the [Docusaurus development server](https://docusaurus.io/docs/installation#running-the-development-server).
 
-1. Install [docker](https://docs.docker.com/engine/install/).
+1. Install [Docker](https://docs.docker.com/engine/install/).
 
-2. Install [docker compose](https://docs.docker.com/compose/install/).
+2. Install [Docker Compose](https://docs.docker.com/compose/install/).
 
 3. Run `docker compose up` from the repository root.
 

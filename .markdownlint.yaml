@@ -5,11 +5,11 @@ MD004:
   style: dash
 
 MD013:
-  # TODO Disabel general line length but limit code blocks and headings.
-  line_length: 500
-  # Match Ozone's code line length.
+  # No line length requirement for general text.
+  line_length: -1
+  # For code, match Ozone's line length.
   code_block_line_length: 120
-  # Keep the minimap on the right legible.
+  # Shorter headings keep the minimap on the right legible.
   heading_block_line_length: 80
 
 # Numbered lists must use numbers in ascending order.
@@ -20,6 +20,8 @@ MD029:
 MD033:
   allowed_elements:
   - br
+  - Tabs
+  - TabItem
 
 # Allow bare URLs since wrapping URLs in <> is invalid mdx.
 MD034: false
@@ -28,22 +30,59 @@ MD034: false
 MD035:
   style: ---
 
-# Enforce consistent capitalization.
-# TODO finish this list.
 MD044:
+  # Do not enforced capitalization checks inside code blocks or HTML.
+  # This feature makes markdownlint better at enforcing capitalization than cspell.
+  code_blocks: false
+  html_elements: false
+  # Enforce consistent capitalization for these words:
   names:
+  # Ozone components:
+  - OM
+  - Ozone Manager
+  - SCM
+  - Storage Container Manager
+  - Recon
+  - Datanode
+  - Datanodes
+  - S3 Gateway
+  - HDDS
+  # Acronyms:
   - FSO
   - OBS
   - ofs
+  - HttpFS
+  - CLI
+  - RPC
   - EC
-  # Lowercase is allowed in repo names like apache/ozone and domains like ozone.apache.org where the name is not
-  # surrounded by spaces.
+  - SPNEGO
+  - SASL
+  - TLS
+  - mTLS
+  - SSL
+  - X.509
+  - REST API
+  # Other systems:
+  - gRPC
+  - RocksDB
+  - Jira
+  - Java
+  - Maven
+  - GPG
+  - Netty
+  - Docker Compose
+  - Docker
+  - pnpm
+  - S3
+  - Hadoop
+  # Enforce capitalization for these words only when they are used in sentences (surrounded by spaces).
+  # Other uses in repo names or links like [apache/ozone](https://github.com/apache/ozone) are ok.
   - " Ratis "
   - " Ozone "
-  - SPNEGO
-  # This rule is not enforced inside code blocks or HTML.
-  code_blocks: false
-  html_elements: false
+  - " Apache "
+  - " ASF "
+  - " HTTP "
+  - " HTTPS "
 
 # Indentation should not be used to inidcate a multi-line code block.
 MD046:
@@ -54,8 +93,9 @@ MD048:
   style: backtick
 
 MD054:
-  # Disable inline links with the same URL, like [www.google.com](www.google.com)
+  # Disable inline links with the same URL, like [www.example.com](www.example.com)
   url_inline: false
 
+# Use pipes on either end of every line in a table.
 MD055:
   style: leading_and_trailing
