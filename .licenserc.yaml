@@ -29,6 +29,7 @@ header:
   # Docs content does not require headers. See examples on https://github.com/apache/www-site
   - "**/*.md"
   - "**/_category_.yml"
+  - pnpm-lock.yaml
 
   # Do not comment on pull requests.
   comment: never
