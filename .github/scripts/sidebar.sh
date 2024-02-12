@@ -18,6 +18,7 @@
 
 
 # Validates docusaurus _category_.yml files used to configure the docs sidebar.
+# Each docs subdirectory should have a _category_.yml file, and it must follow the defined schema.
 
 rc=0
 
@@ -43,4 +44,3 @@ for child in $(find "$root"/docs/*); do
 done
 
 exit "$rc"
-

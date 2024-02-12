@@ -17,7 +17,8 @@
 # under the License.
 
 
-# Checks all page files and their parent directories to ensure that they use docusaurus number prefixes and are named all lower case with kebab-case.
+# Checks all page files and their parent directories to ensure that they use docusaurus number prefixes and are named
+# all lower case with kebab-case.
 
 root="$(git rev-parse --show-toplevel)"
 rc=0
@@ -65,4 +66,3 @@ for file in $(find "$root"/src/pages/*); do
 done
 
 exit "$rc"
-
