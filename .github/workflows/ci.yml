@@ -34,7 +34,7 @@ jobs:
     steps:
     - name: Echo conditions
       run: |
-        echo GH event: ${{ github.event }}
+        echo GH event: ${{ github.event_name }}
         echo GH ref: ${{ github.ref_name }}
   # docusaurus:
   #   uses: ./.github/workflows/docusaurus.yml
