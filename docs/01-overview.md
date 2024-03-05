@@ -1,6 +1,7 @@
 ---
 # Make this the default docs landing page.
 slug: /
+extra: key
 ---
 
 # Overview
