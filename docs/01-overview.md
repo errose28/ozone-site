@@ -1,7 +1,6 @@
 ---
 # Make this the default docs landing page.
 slug: /
-title: Should we use page titles?
 ---
 
 # Overview
