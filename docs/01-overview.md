@@ -1,6 +1,6 @@
 ---
 # Make this the default docs landing page.
-slug: /
+slug: /other/slug
 ---
 
 # Overview
