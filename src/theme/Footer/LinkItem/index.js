@@ -48,8 +48,8 @@ export default function FooterLinkItem({item}) {
                 to: toUrl,
               })}
           {...props}>
+        {iconPath && <img src={iconPath} alt={`${label} Icon`} style={{width: '1em', height: '1em', marginRight: '0.5em', verticalAlign: 'middle' }} />}
         {label}
-        {iconPath && <img src={iconPath} alt={`${label} Icon`} style={{fill: 'white', width: '16px', height: '16px', marginLeft: '5px', verticalAlign: 'middle' }} />}
         {href && !isInternalUrl(href) && <IconExternalLink />}
       </Link>
   );
